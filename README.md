@@ -4,6 +4,7 @@
 
 A devtool for measuring dimensions on your React Native apps
 
+![iOS Example](./demo.gif)
 
 ````js
 // first, import the component
