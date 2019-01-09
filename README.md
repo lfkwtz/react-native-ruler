@@ -1,5 +1,7 @@
 # react-native-ruler
 
+[![npm version](https://badge.fury.io/js/react-native-ruler.svg)](https://badge.fury.io/js/react-native-ruler)
+
 A devtool for measuring dimensions on your React Native apps
 
 
