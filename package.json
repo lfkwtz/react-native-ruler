@@ -1,24 +1,39 @@
 {
-  "name": "react-native-ruler",
-  "version": "0.0.4",
-  "description": "",
-  "license": "MIT",
-  "author": "Michael Lefkowitz <lefkowitz.michael@gmail.com>",
-  "repository": {
-      "type": "git",
-      "url": "https://github.com/lfkwtz/react-native-ruler.git"
-  },
-  "main": "src/index.js",
-  "keywords": [
-      "devtools",
-      "measure",
-      "ruler",
-      "react",
-      "react-native",
-      "react native"
-  ],
-  "files": [
-      "README.md",
-      "src/index.js"
-  ]
+    "name": "react-native-ruler",
+    "version": "0.0.5",
+    "description": "A devtool for measuring pixel dimensions on your React Native screens",
+    "license": "MIT",
+    "author": "Michael Lefkowitz <lefkowitz.michael@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lfkwtz/react-native-ruler.git"
+    },
+    "main": "src/index.js",
+    "keywords": [
+        "devtools",
+        "measure",
+        "ruler",
+        "react",
+        "react-native",
+        "react native"
+    ],
+    "files": [
+        "README.md",
+        "src/index.js"
+    ],
+    "devDependencies": {
+        "eslint-config-ls-react": "https://github.com/lawnstarter/eslint-config-ls-react#2.0.3",
+        "husky": "^0.14.3",
+        "prettier": "^1.15.3",
+        "pretty-quick": "^1.8.0",
+        "prop-types": "^15.6.2",
+        "react": "16.6.1",
+        "react-native": "0.57.7"
+    },
+    "scripts": {
+        "precommit": "pretty-quick --staged",
+        "prettier:debug-check": "prettier --config ./.prettierrc.js --debug-check \"{src,test}/**/*.js\"",
+        "preprettier:all": "yarn run prettier:debug-check",
+        "prettier:all": "prettier --config ./.prettierrc.js --write \"{src,test}/**/*.js\""
+    }
 }
