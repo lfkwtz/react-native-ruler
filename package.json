@@ -1,6 +1,6 @@
 {
     "name": "react-native-ruler",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "A devtool for measuring pixel dimensions on your React Native screens",
     "license": "MIT",
     "author": "Michael Lefkowitz <lefkowitz.michael@gmail.com>",
@@ -15,11 +15,8 @@
         "ruler",
         "react",
         "react-native",
-        "react native"
-    ],
-    "files": [
-        "README.md",
-        "src/index.js"
+        "react native",
+        "expo"
     ],
     "devDependencies": {
         "eslint-config-ls-react": "https://github.com/lawnstarter/eslint-config-ls-react#2.0.3",

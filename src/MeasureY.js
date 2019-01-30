@@ -61,8 +61,10 @@ export class MeasureY extends PureComponent {
     }
 
     render() {
+        const { yLine, pan } = this.state;
+
         const panStyle = {
-            transform: this.state.pan.getTranslateTransform(),
+            transform: pan.getTranslateTransform(),
         };
 
         return (
@@ -70,10 +72,10 @@ export class MeasureY extends PureComponent {
                 <Text
                     style={{
                         position: 'absolute',
-                        top: this.state.yLine - 15,
+                        top: yLine - 15,
                     }}
                 >
-                    {this.state.yLine.toFixed(2)}
+                    {yLine.toFixed(2)}
                 </Text>
                 <View
                     style={{
@@ -81,16 +83,16 @@ export class MeasureY extends PureComponent {
                         width,
                         height: 1,
                         backgroundColor: 'black',
-                        top: this.state.yLine,
+                        top: yLine,
                     }}
                 />
                 <Text
                     style={{
                         position: 'absolute',
-                        top: this.state.yLine,
+                        top: yLine,
                     }}
                 >
-                    {this.state.yLine.toFixed(2)}
+                    {yLine.toFixed(2)}
                 </Text>
                 <Animated.View
                     {...this.panResponder.panHandlers}
