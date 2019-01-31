@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Animated, Dimensions, PanResponder, Text, View } from 'react-native';
+import { Animated, Dimensions, PanResponder, StyleSheet, Text, View } from 'react-native';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -71,11 +71,13 @@ export class MeasureX extends PureComponent {
         };
 
         return (
-            <View style={{ height, width, position: 'absolute' }}>
+            <View style={{ height: '100%', width: '100%', position: 'absolute' }}>
                 <Text
                     style={{
                         position: 'absolute',
-                        right: xLine - 15,
+                        left: xLine - 15,
+                        top: 15,
+                        transform: [{ rotate: '90deg' }],
                     }}
                 >
                     {xLine.toFixed(2)}
@@ -92,7 +94,9 @@ export class MeasureX extends PureComponent {
                 <Text
                     style={{
                         position: 'absolute',
-                        right: xLine,
+                        left: xLine - 30,
+                        top: 15,
+                        transform: [{ rotate: '90deg' }],
                     }}
                 >
                     {xLine.toFixed(2)}
@@ -105,34 +109,35 @@ export class MeasureX extends PureComponent {
                             position: 'absolute',
                             bottom: 0,
                             right: 0,
-                            height,
-                            flexDirection: 'row',
+                            height: '100%',
                             zIndex: 10,
                         },
                     ]}
                 >
                     <View
                         style={{
-                            backgroundColor: 'black',
-                            width: 1,
-                        }}
-                    />
-                    <View
-                        style={{
                             backgroundColor: 'yellow',
-                            width: 28,
+                            width: 30,
+                            height,
+                            borderLeftColor: 'black',
+                            borderRightColor: 'black',
+                            borderLeftWidth: 1,
+                            borderRightWidth: 1,
                         }}
                     >
                         {/* {this.renderVerticalRulerTicks()} */}
                     </View>
-                    <View
-                        style={{
-                            backgroundColor: 'black',
-                            width: 1,
-                        }}
-                    />
                 </Animated.View>
             </View>
         );
     }
 }
+
+const defaultStyles = StyleSheet.create({
+    lineText: {
+        position: 'absolute',
+        textAlign: 'center',
+        width: '100%',
+        fontWeight: 'bold',
+    },
+});

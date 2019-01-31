@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
-import { Dimensions, View } from 'react-native';
+import { View } from 'react-native';
 import { MeasureY } from './MeasureY';
 // import { MeasureX } from "./MeasureX";
-
-const { width, height } = Dimensions.get('screen');
+// TODO: finish MeasureX
 
 export class RNRuler extends PureComponent {
     render() {
         return (
-            <View style={{ height, width, position: 'absolute' }}>
+            <View style={{ height: '100%', width: '100%', position: 'absolute' }}>
+                {/* <MeasureX /> */}
                 <MeasureY />
             </View>
         );

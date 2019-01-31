@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Animated, Dimensions, PanResponder, Text, View } from 'react-native';
+import { Animated, Dimensions, PanResponder, StyleSheet, Text, View } from 'react-native';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -37,24 +37,22 @@ export class MeasureY extends PureComponent {
         });
     }
 
-    modifyHorizonalAlignment({ tick }) {
-        if (tick < 10) {
+    modifyAlignment({ mark }) {
+        if (mark === 0) {
             return { alignItems: 'flex-start' };
-        } else if (tick > width - 10) {
+        } else if (mark === width) {
             return { alignItems: 'flex-end' };
         }
+        return { alignItems: 'center' };
     }
 
-    renderHorizontalRulerTicks() {
-        const ticks = [0, width * 0.25, width * 0.5, width * 0.75, width];
-        return ticks.map((tick) => {
+    renderHatchMarks() {
+        const marks = [0, width * 0.25, width * 0.5, width * 0.75, width];
+        return marks.map((mark) => {
             return (
-                <View
-                    key={tick}
-                    style={[{ alignItems: 'center' }, this.modifyHorizonalAlignment({ tick })]}
-                >
+                <View key={mark} style={[{ width: 50 }, this.modifyAlignment({ mark })]}>
                     <View style={{ width: 1, height: 10, backgroundColor: 'black' }} />
-                    <Text>{tick}</Text>
+                    <Text>{mark}</Text>
                 </View>
             );
         });
@@ -68,29 +66,33 @@ export class MeasureY extends PureComponent {
         };
 
         return (
-            <View style={{ height, width, position: 'absolute' }}>
+            <View style={{ height: '100%', width: '100%', position: 'absolute' }}>
                 <Text
-                    style={{
-                        position: 'absolute',
-                        top: yLine - 15,
-                    }}
+                    style={[
+                        defaultStyles.lineText,
+                        {
+                            top: yLine - 15,
+                        },
+                    ]}
                 >
                     {yLine.toFixed(2)}
                 </Text>
                 <View
                     style={{
                         position: 'absolute',
-                        width,
+                        width: '100%',
                         height: 1,
                         backgroundColor: 'black',
                         top: yLine,
                     }}
                 />
                 <Text
-                    style={{
-                        position: 'absolute',
-                        top: yLine,
-                    }}
+                    style={[
+                        defaultStyles.lineText,
+                        {
+                            top: yLine,
+                        },
+                    ]}
                 >
                     {yLine.toFixed(2)}
                 </Text>
@@ -102,35 +104,36 @@ export class MeasureY extends PureComponent {
                             position: 'absolute',
                             bottom: 0,
                             right: 0,
-                            width,
+                            width: '100%',
                             zIndex: 10,
                         },
                     ]}
                 >
                     <View
                         style={{
-                            backgroundColor: 'black',
-                            height: 1,
-                        }}
-                    />
-                    <View
-                        style={{
                             backgroundColor: 'yellow',
                             justifyContent: 'space-between',
                             flexDirection: 'row',
-                            height: 28,
+                            height: 30,
+                            borderTopColor: 'black',
+                            borderBottomColor: 'black',
+                            borderTopWidth: 1,
+                            borderBottomWidth: 1,
                         }}
                     >
-                        {this.renderHorizontalRulerTicks()}
+                        {this.renderHatchMarks()}
                     </View>
-                    <View
-                        style={{
-                            backgroundColor: 'black',
-                            height: 1,
-                        }}
-                    />
                 </Animated.View>
             </View>
         );
     }
 }
+
+const defaultStyles = StyleSheet.create({
+    lineText: {
+        position: 'absolute',
+        textAlign: 'center',
+        width: '100%',
+        fontWeight: 'bold',
+    },
+});
