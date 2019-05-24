@@ -22,6 +22,8 @@ import { RNRuler } from 'react-native-ruler';
 <RNRuler />;
 ```
 
+-   Tap the bottom right corner of the ruler to swap between axis
+
 ## License
 
 react-native-ruler is [MIT licensed](https://github.com/lfkwtz/react-native-ruler/tree/master/LICENSE)

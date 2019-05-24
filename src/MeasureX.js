@@ -9,7 +9,8 @@ export class MeasureX extends PureComponent {
 
         this.state = {
             pan: new Animated.ValueXY(),
-            xLine: 0,
+            opacity: new Animated.Value(1),
+            xLine: null,
         };
 
         this._val = { x: 0, y: 0 };
@@ -19,7 +20,10 @@ export class MeasureX extends PureComponent {
         });
 
         this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: () => {
+            onStartShouldSetPanResponder: ({ nativeEvent }, { numberActiveTouches }) => {
+                if (nativeEvent.pageY > height * 0.95 || numberActiveTouches > 1) {
+                    this.props.swapLines();
+                }
                 return true;
             },
             onPanResponderMove: Animated.event([
@@ -28,79 +32,107 @@ export class MeasureX extends PureComponent {
                     dx: this.state.pan.x,
                 },
             ]),
-            onPanResponderRelease: (e, gesture) => {
-                const xLine = width + gesture.dx - 30;
+            onPanResponderRelease: (e, { dx }) => {
+                const xLine = width + dx - 30;
                 console.log('x location', xLine);
-                this.setState({ xLine });
-                Animated.spring(this.state.pan, { toValue: { x: 0, y: 0 } }).start();
+                this.setState({ xLine, opacity: new Animated.Value(1) }, () => {
+                    Animated.spring(this.state.pan, { toValue: { x: 0, y: 0 } }).start();
+                    Animated.timing(this.state.opacity, {
+                        toValue: 0,
+                        duration: 1500,
+                    }).start();
+                });
             },
         });
     }
 
-    modifyVerticalAlignment({ tick }) {
-        if (tick < 10) {
-            return { alignItems: 'flex-end' };
-        } else if (tick > height - 10) {
-            return { alignItems: 'flex-start' };
+    setAlignment({ mark }) {
+        if (mark === 0) {
+            return 2;
+        } else if (mark === height) {
+            return -12;
         }
+        return 2;
     }
 
-    renderVerticalRulerTicks() {
-        const ticks = [0, height * 0.25, height * 0.5, height * 0.75, height];
-        return ticks.map((tick) => {
+    renderHatchMarks() {
+        const marks = [0, height * 0.25, height * 0.5, height * 0.75, height];
+        return marks.map((mark, idx) => {
             return (
-                <View
-                    key={tick}
-                    //   style={[
-                    //     { alignItems: "center" },
-                    //     this.modifyVerticalAlignment({ tick })
-                    //   ]}
-                >
+                <View key={mark}>
                     <View style={{ width: 10, height: 1, backgroundColor: 'black' }} />
-                    <Text style={{ fontSize: 10 }}>{tick}</Text>
+                    <Text
+                        style={{
+                            fontSize: 11,
+                            position: 'absolute',
+                            top: this.setAlignment({ mark }),
+                            left: 1,
+                        }}
+                    >
+                        {mark}
+                    </Text>
                 </View>
             );
         });
     }
 
     render() {
-        const { xLine, pan } = this.state;
+        const { xLine, pan, opacity } = this.state;
 
         const panStyle = {
             transform: pan.getTranslateTransform(),
         };
 
         return (
-            <View style={{ height: '100%', width: '100%', position: 'absolute' }}>
-                <Text
+            <View
+                style={{
+                    height: '100%',
+                    width: '100%',
+                    position: 'absolute',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <Animated.Text
                     style={{
+                        opacity,
                         position: 'absolute',
-                        left: xLine - 15,
-                        top: 15,
-                        transform: [{ rotate: '90deg' }],
+                        fontSize: 80,
                     }}
+                    testID="linePosition"
                 >
-                    {xLine.toFixed(2)}
-                </Text>
+                    {xLine === null ? '' : xLine.toFixed(2)}
+                </Animated.Text>
+                {/* <Text
+          style={{
+            position: "absolute",
+            left: xLine - 55 + (xLine < 100 ? 10 : 0),
+            top: height / 2,
+            fontWeight: "bold"
+          }}
+        >
+          {xLine.toFixed(2)}
+        </Text> */}
                 <View
                     style={{
                         position: 'absolute',
                         width: 1,
                         height,
-                        backgroundColor: 'black',
+                        backgroundColor: xLine === null ? 'transparent' : 'black',
                         left: xLine,
                     }}
                 />
-                <Text
-                    style={{
-                        position: 'absolute',
-                        left: xLine - 30,
-                        top: 15,
-                        transform: [{ rotate: '90deg' }],
-                    }}
-                >
-                    {xLine.toFixed(2)}
-                </Text>
+                {/* <Text
+          style={{
+            position: "absolute",
+            left: xLine + 5,
+            top: height / 2,
+            fontWeight: "bold",
+            transform: [{ rotate: "90deg" }]
+          }}
+        >
+          {xLine.toFixed(2)}
+        </Text> */}
                 <Animated.View
                     {...this.panResponder.panHandlers}
                     style={[
@@ -110,34 +142,25 @@ export class MeasureX extends PureComponent {
                             bottom: 0,
                             right: 0,
                             height: '100%',
-                            zIndex: 10,
                         },
                     ]}
                 >
                     <View
                         style={{
-                            backgroundColor: 'yellow',
+                            backgroundColor: 'rgba(254,229,95,0.9)',
                             width: 30,
                             height,
                             borderLeftColor: 'black',
                             borderRightColor: 'black',
                             borderLeftWidth: 1,
                             borderRightWidth: 1,
+                            justifyContent: 'space-between',
                         }}
                     >
-                        {/* {this.renderVerticalRulerTicks()} */}
+                        {this.renderHatchMarks()}
                     </View>
                 </Animated.View>
             </View>
         );
     }
 }
-
-const defaultStyles = StyleSheet.create({
-    lineText: {
-        position: 'absolute',
-        textAlign: 'center',
-        width: '100%',
-        fontWeight: 'bold',
-    },
-});

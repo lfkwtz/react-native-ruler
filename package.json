@@ -1,6 +1,6 @@
 {
     "name": "react-native-ruler",
-    "version": "0.0.7",
+    "version": "0.1.0",
     "description": "A devtool for measuring pixel dimensions on your React Native screens",
     "license": "MIT",
     "author": "Michael Lefkowitz <lefkowitz.michael@gmail.com>",
