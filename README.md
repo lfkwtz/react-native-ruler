@@ -6,6 +6,10 @@
 
 ![iOS Example](./demo.gif)
 
+This is a proof of concept I threw together on a flight. Eventual plans are to integrate within the devtools menu, support rotating the device, allow the bars to be on any of the 4 sides of the device, etc..
+
+Happy to take PRs or suggestions.
+
 ## Getting Started
 
 ### Installing
