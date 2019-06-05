@@ -26,7 +26,7 @@ import { RNRuler } from 'react-native-ruler';
 <RNRuler />;
 ```
 
--   Tap the bottom right corner of the ruler to swap between axis
+-   Tap the bottom right corner of the ruler (or two-finger tap the bar) to swap between axis
 
 ## License
 
