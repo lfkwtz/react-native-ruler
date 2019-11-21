@@ -50,7 +50,8 @@ export class MeasureY extends PureComponent {
     setAlignment({ mark }) {
         if (mark === 0) {
             return { alignItems: 'flex-start' };
-        } else if (mark === width) {
+        }
+        if (mark === width) {
             return { alignItems: 'flex-end' };
         }
         return { alignItems: 'center' };

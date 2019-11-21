@@ -49,7 +49,8 @@ export class MeasureX extends PureComponent {
     setAlignment({ mark }) {
         if (mark === 0) {
             return 2;
-        } else if (mark === height) {
+        }
+        if (mark === height) {
             return -12;
         }
         return 2;
